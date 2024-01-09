@@ -7,6 +7,7 @@ const Pagination = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,9 +17,11 @@ const Pagination = () => {
         );
         setMembers(response.data);
         setLoading(false);
+        setError("");
       } catch (error) {
         console.error("Error fetching data: ", error);
         setLoading(false);
+        setError("Failed to fetch data. Please try again later.");
       }
     };
     fetchData();
@@ -68,6 +71,8 @@ const Pagination = () => {
       <h1>Employee Data Table</h1>
       {loading ? (
         <p>Loading...</p>
+      ) : error ? (
+        <p>{error}</p>
       ) : (
         <div>
           <div className="data-container">
